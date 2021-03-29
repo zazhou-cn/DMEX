@@ -12,4 +12,5 @@ interface ICloudMiner is IERC721 {
     
 	function tokensOfOwner(address owner) external view returns (uint256[] memory) ;
 	
+	function setTokenURI(uint256 tokenId, string memory tokenURI) external;
 }
