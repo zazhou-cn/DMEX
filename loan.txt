@@ -1,0 +1,169 @@
+Compilation warnings/errors on loan/DMEXLoan.sol:
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> loan/DMEXLoan.sol
+
+
+INFO:Detectors:[93m
+Reentrancy in CloudMinerDex.tradeNFT(bytes) (loan/CloudMinerDex.sol#74-83):
+	External calls:
+	- TransferHelper.safeTransferFrom(order.tokenAddr,msg.sender,fundAddr,fees) (loan/CloudMinerDex.sol#78)
+	- TransferHelper.safeTransferFrom(order.tokenAddr,msg.sender,order.makerAddr,order.txAmount.sub(fees)) (loan/CloudMinerDex.sol#79)
+	- TransferHelper.safeTransferFrom(cloudMiner,order.makerAddr,msg.sender,order.nftid) (loan/CloudMinerDex.sol#80)
+	State variables written after the call(s):
+	- _orderRecord[txid] = true (loan/CloudMinerDex.sol#81)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1[0m
+INFO:Detectors:[92m
+Reentrancy in CloudMinerDex.tradeNFT(bytes) (loan/CloudMinerDex.sol#74-83):
+	External calls:
+	- TransferHelper.safeTransferFrom(order.tokenAddr,msg.sender,fundAddr,fees) (loan/CloudMinerDex.sol#78)
+	- TransferHelper.safeTransferFrom(order.tokenAddr,msg.sender,order.makerAddr,order.txAmount.sub(fees)) (loan/CloudMinerDex.sol#79)
+	- TransferHelper.safeTransferFrom(cloudMiner,order.makerAddr,msg.sender,order.nftid) (loan/CloudMinerDex.sol#80)
+	Event emitted after the call(s):
+	- TradeOrder(order.makerAddr,msg.sender,order.nftid,txid,order.tokenAddr,order.txAmount) (loan/CloudMinerDex.sol#82)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3[0m
+INFO:Detectors:[92m
+CloudMinerDex.assertTransaction(bytes) (loan/CloudMinerDex.sol#85-104) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(block.timestamp < order.expireTime,order expire!) (loan/CloudMinerDex.sol#93)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp[0m
+INFO:Detectors:[92m
+Address.isContract(address) (loan/Address.sol#26-35) uses assembly
+	- INLINE ASM (loan/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (loan/Address.sol#171-188) uses assembly
+	- INLINE ASM (loan/Address.sol#180-183)
+CloudMinerDex.splitSignature(bytes) (loan/CloudMinerDex.sol#106-127) uses assembly
+	- INLINE ASM (loan/CloudMinerDex.sol#117-124)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+CloudMinerDex.assertTransaction(bytes) (loan/CloudMinerDex.sol#85-104) compares to a boolean constant:
+	-require(bool,string)(_orderRecord[txid] == false,order exists!) (loan/CloudMinerDex.sol#92)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['>=0.4.22<0.7.0', '^0.6.0', '^0.6.2']
+	- ^0.6.2 (loan/Address.sol#3)
+	- >=0.4.22<0.7.0 (loan/CloudMinerDex.sol#2)
+	- ABIEncoderV2 (loan/CloudMinerDex.sol#3)
+	- ^0.6.0 (loan/Governance.sol#2)
+	- ^0.6.2 (loan/IERC721.sol#3)
+	- ^0.6.0 (loan/SafeMath.sol#3)
+	- ^0.6.0 (loan/TransferHelper.sol#3)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (loan/Address.sol#3) allows old versions
+Pragma version>=0.4.22<0.7.0 (loan/CloudMinerDex.sol#2) allows old versions
+Pragma version^0.6.0 (loan/Governance.sol#2) allows old versions
+Pragma version^0.6.2 (loan/IERC721.sol#3) allows old versions
+Pragma version^0.6.0 (loan/SafeMath.sol#3) allows old versions
+Pragma version^0.6.0 (loan/TransferHelper.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (loan/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (loan/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (loan/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (loan/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (loan/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (loan/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (loan/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (loan/Address.sol#167)
+Low level call in TransferHelper.safeApprove(address,address,uint256) (loan/TransferHelper.sol#7-11):
+	- (success,data) = token.call(abi.encodeWithSelector(0x095ea7b3,to,value)) (loan/TransferHelper.sol#9)
+Low level call in TransferHelper.safeTransfer(address,address,uint256) (loan/TransferHelper.sol#13-17):
+	- (success,data) = token.call(abi.encodeWithSelector(0xa9059cbb,to,value)) (loan/TransferHelper.sol#15)
+Low level call in TransferHelper.safeTransferFrom(address,address,address,uint256) (loan/TransferHelper.sol#19-23):
+	- (success,data) = token.call(abi.encodeWithSelector(0x23b872dd,from,to,value)) (loan/TransferHelper.sol#21)
+Low level call in TransferHelper.safeTransferETH(address,uint256) (loan/TransferHelper.sol#25-28):
+	- (success) = to.call{value: value}(new bytes(0)) (loan/TransferHelper.sol#26)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Variable CloudMinerDex.DOMAIN_SEPARATOR (loan/CloudMinerDex.sol#17) is not in mixedCase
+Constant CloudMinerDex.chainId (loan/CloudMinerDex.sol#18) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant CloudMinerDex.salt (loan/CloudMinerDex.sol#19) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant CloudMinerDex.cloudMiner (loan/CloudMinerDex.sol#26) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant CloudMinerDex.fundAddr (loan/CloudMinerDex.sol#27) is not in UPPER_CASE_WITH_UNDERSCORES
+Variable Governance._governance (loan/Governance.sol#6) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+tradeNFT(bytes) should be declared external:
+	- CloudMinerDex.tradeNFT(bytes) (loan/CloudMinerDex.sol#74-83)
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (loan/Governance.sol#19-24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+DMEXLoan.splitSignature(bytes) (loan/DMEXLoan.sol#92-113) uses assembly
+	- INLINE ASM (loan/DMEXLoan.sol#103-110)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+DMEXLoan.pledgeOrder(uint256,uint256,bytes) (loan/DMEXLoan.sol#71-90) compares to a boolean constant:
+	-require(bool,string)(_orderRecord[orderid] == false,order exists!) (loan/DMEXLoan.sol#72)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality[0m
+INFO:Detectors:[92m
+Pragma version>=0.4.22<0.7.0 (loan/DMEXLoan.sol#1) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Variable DMEXLoan.DOMAIN_SEPARATOR (loan/DMEXLoan.sol#9) is not in mixedCase
+Constant DMEXLoan.chainId (loan/DMEXLoan.sol#10) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant DMEXLoan.salt (loan/DMEXLoan.sol#11) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant DMEXLoan.validateAddr_ (loan/DMEXLoan.sol#19) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+pledgeOrder(uint256,uint256,bytes) should be declared external:
+	- DMEXLoan.pledgeOrder(uint256,uint256,bytes) (loan/DMEXLoan.sol#71-90)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (loan/SafeMath.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Address.isContract(address) (loan/Address.sol#26-35) uses assembly
+	- INLINE ASM (loan/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (loan/Address.sol#171-188) uses assembly
+	- INLINE ASM (loan/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (loan/Address.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (loan/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (loan/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (loan/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (loan/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (loan/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (loan/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (loan/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (loan/Address.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (loan/Governance.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Variable Governance._governance (loan/Governance.sol#6) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (loan/Governance.sol#19-24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (loan/IERC721.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (loan/TransferHelper.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in TransferHelper.safeApprove(address,address,uint256) (loan/TransferHelper.sol#7-11):
+	- (success,data) = token.call(abi.encodeWithSelector(0x095ea7b3,to,value)) (loan/TransferHelper.sol#9)
+Low level call in TransferHelper.safeTransfer(address,address,uint256) (loan/TransferHelper.sol#13-17):
+	- (success,data) = token.call(abi.encodeWithSelector(0xa9059cbb,to,value)) (loan/TransferHelper.sol#15)
+Low level call in TransferHelper.safeTransferFrom(address,address,address,uint256) (loan/TransferHelper.sol#19-23):
+	- (success,data) = token.call(abi.encodeWithSelector(0x23b872dd,from,to,value)) (loan/TransferHelper.sol#21)
+Low level call in TransferHelper.safeTransferETH(address,uint256) (loan/TransferHelper.sol#25-28):
+	- (success) = to.call{value: value}(new bytes(0)) (loan/TransferHelper.sol#26)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Slither:loan analyzed (12 contracts with 46 detectors), 62 result(s) found
+INFO:Slither:[94mUse https://crytic.io/ to get access to additional detectors and Github integration[0m

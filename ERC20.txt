@@ -1,0 +1,389 @@
+INFO:Detectors:[92m
+ERC20.constructor(string,string).name (ERC20/ERC20.sol#57) shadows:
+	- ERC20.name() (ERC20/ERC20.sol#66-68) (function)
+ERC20.constructor(string,string).symbol (ERC20/ERC20.sol#57) shadows:
+	- ERC20.symbol() (ERC20/ERC20.sol#74-76) (function)
+Vistor.setVistor(address,bool).allow (ERC20/Vistor.sol#17) shadows:
+	- Vistor.allow(address) (ERC20/Vistor.sol#22-24) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing[0m
+INFO:Detectors:[92m
+Address.isContract(address) (ERC20/Address.sol#26-35) uses assembly
+	- INLINE ASM (ERC20/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (ERC20/Address.sol#171-188) uses assembly
+	- INLINE ASM (ERC20/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['^0.6.0', '^0.6.2']
+	- ^0.6.2 (ERC20/Address.sol#3)
+	- ^0.6.0 (ERC20/Context.sol#3)
+	- ^0.6.0 (ERC20/ERC20.sol#3)
+	- ^0.6.0 (ERC20/Governance.sol#2)
+	- ^0.6.0 (ERC20/IDMEXToken.sol#3)
+	- ^0.6.0 (ERC20/IERC20.sol#3)
+	- ^0.6.0 (ERC20/IFILToken.sol#2)
+	- ^0.6.0 (ERC20/SafeMath.sol#3)
+	- ^0.6.0 (ERC20/Vistor.sol#2)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (ERC20/Address.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/Context.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/ERC20.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/Governance.sol#2) allows old versions
+Pragma version^0.6.0 (ERC20/IDMEXToken.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/IERC20.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/IFILToken.sol#2) allows old versions
+Pragma version^0.6.0 (ERC20/SafeMath.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/Vistor.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (ERC20/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (ERC20/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (ERC20/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (ERC20/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (ERC20/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (ERC20/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (ERC20/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (ERC20/Address.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Variable Governance._governance (ERC20/Governance.sol#6) is not in mixedCase
+Parameter IFILToken.mint(uint256)._amount (ERC20/IFILToken.sol#13) is not in mixedCase
+Parameter IFILToken.burn(uint256)._amount (ERC20/IFILToken.sol#17) is not in mixedCase
+Parameter Vistor.setVistor(address,bool)._addr (ERC20/Vistor.sol#17) is not in mixedCase
+Parameter Vistor.allow(address)._addr (ERC20/Vistor.sol#22) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+name() should be declared external:
+	- ERC20.name() (ERC20/ERC20.sol#66-68)
+symbol() should be declared external:
+	- ERC20.symbol() (ERC20/ERC20.sol#74-76)
+decimals() should be declared external:
+	- ERC20.decimals() (ERC20/ERC20.sol#91-93)
+totalSupply() should be declared external:
+	- ERC20.totalSupply() (ERC20/ERC20.sol#98-100)
+balanceOf(address) should be declared external:
+	- ERC20.balanceOf(address) (ERC20/ERC20.sol#105-107)
+transfer(address,uint256) should be declared external:
+	- ERC20.transfer(address,uint256) (ERC20/ERC20.sol#117-120)
+allowance(address,address) should be declared external:
+	- ERC20.allowance(address,address) (ERC20/ERC20.sol#125-127)
+approve(address,uint256) should be declared external:
+	- ERC20.approve(address,uint256) (ERC20/ERC20.sol#136-139)
+transferFrom(address,address,uint256) should be declared external:
+	- ERC20.transferFrom(address,address,uint256) (ERC20/ERC20.sol#153-157)
+increaseAllowance(address,uint256) should be declared external:
+	- ERC20.increaseAllowance(address,uint256) (ERC20/ERC20.sol#171-174)
+decreaseAllowance(address,uint256) should be declared external:
+	- ERC20.decreaseAllowance(address,uint256) (ERC20/ERC20.sol#190-193)
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (ERC20/Governance.sol#19-24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (ERC20/IERC20.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+ERC20.constructor(string,string).name (ERC20/ERC20.sol#57) shadows:
+	- ERC20.name() (ERC20/ERC20.sol#66-68) (function)
+ERC20.constructor(string,string).symbol (ERC20/ERC20.sol#57) shadows:
+	- ERC20.symbol() (ERC20/ERC20.sol#74-76) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing[0m
+INFO:Detectors:[92m
+Address.isContract(address) (ERC20/Address.sol#26-35) uses assembly
+	- INLINE ASM (ERC20/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (ERC20/Address.sol#171-188) uses assembly
+	- INLINE ASM (ERC20/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['^0.6.0', '^0.6.2']
+	- ^0.6.2 (ERC20/Address.sol#3)
+	- ^0.6.0 (ERC20/Context.sol#3)
+	- ^0.6.0 (ERC20/ERC20.sol#3)
+	- ^0.6.0 (ERC20/IERC20.sol#3)
+	- ^0.6.0 (ERC20/SafeMath.sol#3)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (ERC20/Address.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/Context.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/ERC20.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/IERC20.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/SafeMath.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (ERC20/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (ERC20/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (ERC20/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (ERC20/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (ERC20/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (ERC20/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (ERC20/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (ERC20/Address.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+name() should be declared external:
+	- ERC20.name() (ERC20/ERC20.sol#66-68)
+symbol() should be declared external:
+	- ERC20.symbol() (ERC20/ERC20.sol#74-76)
+decimals() should be declared external:
+	- ERC20.decimals() (ERC20/ERC20.sol#91-93)
+totalSupply() should be declared external:
+	- ERC20.totalSupply() (ERC20/ERC20.sol#98-100)
+balanceOf(address) should be declared external:
+	- ERC20.balanceOf(address) (ERC20/ERC20.sol#105-107)
+transfer(address,uint256) should be declared external:
+	- ERC20.transfer(address,uint256) (ERC20/ERC20.sol#117-120)
+allowance(address,address) should be declared external:
+	- ERC20.allowance(address,address) (ERC20/ERC20.sol#125-127)
+approve(address,uint256) should be declared external:
+	- ERC20.approve(address,uint256) (ERC20/ERC20.sol#136-139)
+transferFrom(address,address,uint256) should be declared external:
+	- ERC20.transferFrom(address,address,uint256) (ERC20/ERC20.sol#153-157)
+increaseAllowance(address,uint256) should be declared external:
+	- ERC20.increaseAllowance(address,uint256) (ERC20/ERC20.sol#171-174)
+decreaseAllowance(address,uint256) should be declared external:
+	- ERC20.decreaseAllowance(address,uint256) (ERC20/ERC20.sol#190-193)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (ERC20/IDMEXToken.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/IERC20.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (ERC20/SafeMath.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Address.isContract(address) (ERC20/Address.sol#26-35) uses assembly
+	- INLINE ASM (ERC20/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (ERC20/Address.sol#171-188) uses assembly
+	- INLINE ASM (ERC20/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (ERC20/Address.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (ERC20/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (ERC20/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (ERC20/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (ERC20/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (ERC20/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (ERC20/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (ERC20/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (ERC20/Address.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (ERC20/Governance.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Variable Governance._governance (ERC20/Governance.sol#6) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (ERC20/Governance.sol#19-24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (ERC20/Context.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+ERC20.constructor(string,string).name (ERC20/ERC20.sol#57) shadows:
+	- ERC20.name() (ERC20/ERC20.sol#66-68) (function)
+ERC20.constructor(string,string).symbol (ERC20/ERC20.sol#57) shadows:
+	- ERC20.symbol() (ERC20/ERC20.sol#74-76) (function)
+Vistor.setVistor(address,bool).allow (ERC20/Vistor.sol#17) shadows:
+	- Vistor.allow(address) (ERC20/Vistor.sol#22-24) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing[0m
+INFO:Detectors:[92m
+Address.isContract(address) (ERC20/Address.sol#26-35) uses assembly
+	- INLINE ASM (ERC20/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (ERC20/Address.sol#171-188) uses assembly
+	- INLINE ASM (ERC20/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['^0.6.0', '^0.6.2']
+	- ^0.6.0 (ERC20/AFILEToken.sol#2)
+	- ^0.6.2 (ERC20/Address.sol#3)
+	- ^0.6.0 (ERC20/Context.sol#3)
+	- ^0.6.0 (ERC20/ERC20.sol#3)
+	- ^0.6.0 (ERC20/Governance.sol#2)
+	- ^0.6.0 (ERC20/IDMEXToken.sol#3)
+	- ^0.6.0 (ERC20/IERC20.sol#3)
+	- ^0.6.0 (ERC20/SafeMath.sol#3)
+	- ^0.6.0 (ERC20/Vistor.sol#2)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (ERC20/AFILEToken.sol#2) allows old versions
+Pragma version^0.6.2 (ERC20/Address.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/Context.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/ERC20.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/Governance.sol#2) allows old versions
+Pragma version^0.6.0 (ERC20/IDMEXToken.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/IERC20.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/SafeMath.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/Vistor.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (ERC20/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (ERC20/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (ERC20/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (ERC20/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (ERC20/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (ERC20/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (ERC20/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (ERC20/Address.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Parameter AFILToken.mint(uint256)._amount (ERC20/AFILEToken.sol#13) is not in mixedCase
+Parameter AFILToken.burn(uint256)._amount (ERC20/AFILEToken.sol#17) is not in mixedCase
+Variable Governance._governance (ERC20/Governance.sol#6) is not in mixedCase
+Parameter Vistor.setVistor(address,bool)._addr (ERC20/Vistor.sol#17) is not in mixedCase
+Parameter Vistor.allow(address)._addr (ERC20/Vistor.sol#22) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+name() should be declared external:
+	- ERC20.name() (ERC20/ERC20.sol#66-68)
+symbol() should be declared external:
+	- ERC20.symbol() (ERC20/ERC20.sol#74-76)
+decimals() should be declared external:
+	- ERC20.decimals() (ERC20/ERC20.sol#91-93)
+totalSupply() should be declared external:
+	- ERC20.totalSupply() (ERC20/ERC20.sol#98-100)
+balanceOf(address) should be declared external:
+	- ERC20.balanceOf(address) (ERC20/ERC20.sol#105-107)
+transfer(address,uint256) should be declared external:
+	- ERC20.transfer(address,uint256) (ERC20/ERC20.sol#117-120)
+allowance(address,address) should be declared external:
+	- ERC20.allowance(address,address) (ERC20/ERC20.sol#125-127)
+approve(address,uint256) should be declared external:
+	- ERC20.approve(address,uint256) (ERC20/ERC20.sol#136-139)
+transferFrom(address,address,uint256) should be declared external:
+	- ERC20.transferFrom(address,address,uint256) (ERC20/ERC20.sol#153-157)
+increaseAllowance(address,uint256) should be declared external:
+	- ERC20.increaseAllowance(address,uint256) (ERC20/ERC20.sol#171-174)
+decreaseAllowance(address,uint256) should be declared external:
+	- ERC20.decreaseAllowance(address,uint256) (ERC20/ERC20.sol#190-193)
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (ERC20/Governance.sol#19-24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+DMCToken.constructor().decimals (ERC20/DMCToken.sol#20) shadows:
+	- ERC20.decimals() (ERC20/ERC20.sol#91-93) (function)
+ERC20.constructor(string,string).name (ERC20/ERC20.sol#57) shadows:
+	- ERC20.name() (ERC20/ERC20.sol#66-68) (function)
+ERC20.constructor(string,string).symbol (ERC20/ERC20.sol#57) shadows:
+	- ERC20.symbol() (ERC20/ERC20.sol#74-76) (function)
+Vistor.setVistor(address,bool).allow (ERC20/Vistor.sol#17) shadows:
+	- Vistor.allow(address) (ERC20/Vistor.sol#22-24) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing[0m
+INFO:Detectors:[92m
+Address.isContract(address) (ERC20/Address.sol#26-35) uses assembly
+	- INLINE ASM (ERC20/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (ERC20/Address.sol#171-188) uses assembly
+	- INLINE ASM (ERC20/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['^0.6.0', '^0.6.2']
+	- ^0.6.2 (ERC20/Address.sol#3)
+	- ^0.6.0 (ERC20/Context.sol#3)
+	- ^0.6.0 (ERC20/DMCToken.sol#2)
+	- ^0.6.0 (ERC20/ERC20.sol#3)
+	- ^0.6.0 (ERC20/Governance.sol#2)
+	- ^0.6.0 (ERC20/IERC20.sol#3)
+	- ^0.6.0 (ERC20/SafeMath.sol#3)
+	- ^0.6.0 (ERC20/Vistor.sol#2)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (ERC20/Address.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/Context.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/DMCToken.sol#2) allows old versions
+Pragma version^0.6.0 (ERC20/ERC20.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/Governance.sol#2) allows old versions
+Pragma version^0.6.0 (ERC20/IERC20.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/SafeMath.sol#3) allows old versions
+Pragma version^0.6.0 (ERC20/Vistor.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (ERC20/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (ERC20/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (ERC20/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (ERC20/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (ERC20/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (ERC20/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (ERC20/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (ERC20/Address.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Parameter DMCToken.mint(address,uint256)._to (ERC20/DMCToken.sol#28) is not in mixedCase
+Parameter DMCToken.mint(address,uint256)._amount (ERC20/DMCToken.sol#28) is not in mixedCase
+Variable Governance._governance (ERC20/Governance.sol#6) is not in mixedCase
+Parameter Vistor.setVistor(address,bool)._addr (ERC20/Vistor.sol#17) is not in mixedCase
+Parameter Vistor.allow(address)._addr (ERC20/Vistor.sol#22) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+DMCToken.constructor() (ERC20/DMCToken.sol#19-26) uses literals with too many digits:
+	- _mint(DAOFUND,10000000 * decimals) (ERC20/DMCToken.sol#21)
+DMCToken.constructor() (ERC20/DMCToken.sol#19-26) uses literals with too many digits:
+	- _mint(DMEXFUND,10000000 * decimals) (ERC20/DMCToken.sol#22)
+DMCToken.constructor() (ERC20/DMCToken.sol#19-26) uses literals with too many digits:
+	- _mint(TEAMLOCK,10000000 * decimals) (ERC20/DMCToken.sol#23)
+DMCToken.constructor() (ERC20/DMCToken.sol#19-26) uses literals with too many digits:
+	- _mint(PELOCK,20000000 * decimals) (ERC20/DMCToken.sol#24)
+DMCToken.slitherConstructorConstantVariables() (ERC20/DMCToken.sol#8-43) uses literals with too many digits:
+	- TOTAL_MINING = 10 ** 18 * 50000000 (ERC20/DMCToken.sol#16)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits[0m
+INFO:Detectors:[92m
+name() should be declared external:
+	- ERC20.name() (ERC20/ERC20.sol#66-68)
+symbol() should be declared external:
+	- ERC20.symbol() (ERC20/ERC20.sol#74-76)
+decimals() should be declared external:
+	- ERC20.decimals() (ERC20/ERC20.sol#91-93)
+totalSupply() should be declared external:
+	- ERC20.totalSupply() (ERC20/ERC20.sol#98-100)
+balanceOf(address) should be declared external:
+	- ERC20.balanceOf(address) (ERC20/ERC20.sol#105-107)
+transfer(address,uint256) should be declared external:
+	- ERC20.transfer(address,uint256) (ERC20/ERC20.sol#117-120)
+allowance(address,address) should be declared external:
+	- ERC20.allowance(address,address) (ERC20/ERC20.sol#125-127)
+approve(address,uint256) should be declared external:
+	- ERC20.approve(address,uint256) (ERC20/ERC20.sol#136-139)
+transferFrom(address,address,uint256) should be declared external:
+	- ERC20.transferFrom(address,address,uint256) (ERC20/ERC20.sol#153-157)
+increaseAllowance(address,uint256) should be declared external:
+	- ERC20.increaseAllowance(address,uint256) (ERC20/ERC20.sol#171-174)
+decreaseAllowance(address,uint256) should be declared external:
+	- ERC20.decreaseAllowance(address,uint256) (ERC20/ERC20.sol#190-193)
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (ERC20/Governance.sol#19-24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+Vistor.setVistor(address,bool).allow (ERC20/Vistor.sol#17) shadows:
+	- Vistor.allow(address) (ERC20/Vistor.sol#22-24) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (ERC20/Governance.sol#2) allows old versions
+Pragma version^0.6.0 (ERC20/Vistor.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Variable Governance._governance (ERC20/Governance.sol#6) is not in mixedCase
+Parameter Vistor.setVistor(address,bool)._addr (ERC20/Vistor.sol#17) is not in mixedCase
+Parameter Vistor.allow(address)._addr (ERC20/Vistor.sol#22) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (ERC20/Governance.sol#19-24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Slither:ERC20 analyzed (40 contracts with 46 detectors), 171 result(s) found
+INFO:Slither:[94mUse https://crytic.io/ to get access to additional detectors and Github integration[0m

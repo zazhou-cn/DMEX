@@ -1,0 +1,892 @@
+Compilation warnings/errors on finance/DMEXJointMining.sol:
+Warning: Contract code size exceeds 24576 bytes (a limit introduced in Spurious Dragon). This contract may not be deployable on mainnet. Consider enabling the optimizer (with a low "runs" value!), turning off revert strings, or using libraries.
+  --> finance/DMEXJointMining.sol:13:1:
+   |
+13 | contract DMEXJointMining is DMEXJointMiningStorage,Vistor {
+   | ^ (Relevant source part starts here and spans across multiple lines).
+
+
+INFO:Detectors:[92m
+Pragma version^0.6.0 (finance/IERC20.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (finance/IMasterMining.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[93m
+DMEXFinance.getProdReleaseInfo(uint256) (finance/DMEXFinance.sol#106-124) performs a multiplication on the result of a division:
+	-startTime = _pfinances[_prodid].createTime.div(DAYTIME).mul(DAYTIME) (finance/DMEXFinance.sol#109)
+DMEXFinance.getProdReleaseInfo(uint256) (finance/DMEXFinance.sol#106-124) performs a multiplication on the result of a division:
+	-curDayTime = block.timestamp.div(DAYTIME).mul(DAYTIME) (finance/DMEXFinance.sol#110)
+DMEXFinance._calcProdCanRecvs(uint256) (finance/DMEXFinance.sol#137-164) performs a multiplication on the result of a division:
+	-startTime = _pfinances[_prodid].createTime.div(DAYTIME).mul(DAYTIME) (finance/DMEXFinance.sol#149)
+DMEXFinance._calcProdCanRecvs(uint256) (finance/DMEXFinance.sol#137-164) performs a multiplication on the result of a division:
+	-curDayTime = block.timestamp.div(DAYTIME).mul(DAYTIME) (finance/DMEXFinance.sol#150)
+DMEXFinance._getReleaseAmount() (finance/DMEXFinance.sol#166-182) performs a multiplication on the result of a division:
+	-curDayTime = block.timestamp.div(DAYTIME).mul(DAYTIME) (finance/DMEXFinance.sol#168)
+DMEXFinance._getReleaseAmount() (finance/DMEXFinance.sol#166-182) performs a multiplication on the result of a division:
+	-startTime = _pfinances[nextid].createTime.div(DAYTIME).mul(DAYTIME) (finance/DMEXFinance.sol#173)
+DMEXFinance._getReleaseAmount() (finance/DMEXFinance.sol#166-182) performs a multiplication on the result of a division:
+	-totalRelease += _pfinances[nextid].famount.mul(diffDay).div(_pfinances[nextid].lockDay).mul(15).div(100) (finance/DMEXFinance.sol#178)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply[0m
+INFO:Detectors:[93m
+DMEXFinance._getCurrentDtokenPrice() (finance/DMEXFinance.sol#130-135) uses a dangerous strict equality:
+	- _token.totalSupply <= 0 || _getLiquidAmout() == 0 (finance/DMEXFinance.sol#131)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities[0m
+INFO:Detectors:[93m
+Reentrancy in DMEXFinance.vendorWithdraw(uint256) (finance/DMEXFinance.sol#86-94):
+	External calls:
+	- TransferHelper.safeTransferFrom(usdt,address(this),msg.sender,amount) (finance/DMEXFinance.sol#89)
+	State variables written after the call(s):
+	- _global.vendorGains += amount (finance/DMEXFinance.sol#90)
+	- _pfinances[_prodid].totalGains += amount (finance/DMEXFinance.sol#91)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1[0m
+INFO:Detectors:[92m
+Vistor.setVistor(address,bool).allow (finance/Vistor.sol#17) shadows:
+	- Vistor.allow(address) (finance/Vistor.sol#22-24) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing[0m
+INFO:Detectors:[92m
+Reentrancy in DMEXFinance.userDeposit(uint256) (finance/DMEXFinance.sol#65-73):
+	External calls:
+	- TransferHelper.safeTransferFrom(usdt,msg.sender,address(this),_amount) (finance/DMEXFinance.sol#66)
+	State variables written after the call(s):
+	- _global.userDeposits = _global.userDeposits.add(_amount) (finance/DMEXFinance.sol#71)
+	- _token.balances[msg.sender] = _token.balances[msg.sender].add(exchangeAmount) (finance/DMEXFinance.sol#68)
+	- _token.totalSupply = _token.totalSupply.add(exchangeAmount) (finance/DMEXFinance.sol#69)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2[0m
+INFO:Detectors:[92m
+Reentrancy in DMEXFinance.userDeposit(uint256) (finance/DMEXFinance.sol#65-73):
+	External calls:
+	- TransferHelper.safeTransferFrom(usdt,msg.sender,address(this),_amount) (finance/DMEXFinance.sol#66)
+	Event emitted after the call(s):
+	- UserDepositABS(msg.sender,_amount,exchangeAmount) (finance/DMEXFinance.sol#72)
+Reentrancy in DMEXFinance.userRedeem() (finance/DMEXFinance.sol#75-84):
+	External calls:
+	- TransferHelper.safeTransferFrom(usdt,address(this),msg.sender,redeemAmount) (finance/DMEXFinance.sol#82)
+	Event emitted after the call(s):
+	- UserRedeemABS(msg.sender,redeemAmount,burnAmount) (finance/DMEXFinance.sol#83)
+Reentrancy in DMEXFinance.vendorWithdraw(uint256) (finance/DMEXFinance.sol#86-94):
+	External calls:
+	- TransferHelper.safeTransferFrom(usdt,address(this),msg.sender,amount) (finance/DMEXFinance.sol#89)
+	Event emitted after the call(s):
+	- VendorWithdrawABS(msg.sender,_prodid,amount) (finance/DMEXFinance.sol#92)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3[0m
+INFO:Detectors:[92m
+DMEXFinance.vendorWithdraw(uint256) (finance/DMEXFinance.sol#86-94) uses timestamp for comparisons
+	Dangerous comparisons:
+	- amount > 0 (finance/DMEXFinance.sol#88)
+DMEXFinance.getProdReleaseInfo(uint256) (finance/DMEXFinance.sol#106-124) uses timestamp for comparisons
+	Dangerous comparisons:
+	- diffDay > _pfinances[_prodid].lockDay (finance/DMEXFinance.sol#112)
+DMEXFinance._getCurrentDtokenPrice() (finance/DMEXFinance.sol#130-135) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _token.totalSupply <= 0 || _getLiquidAmout() == 0 (finance/DMEXFinance.sol#131)
+DMEXFinance._calcProdCanRecvs(uint256) (finance/DMEXFinance.sol#137-164) uses timestamp for comparisons
+	Dangerous comparisons:
+	- diffDay > _pfinances[_prodid].lockDay (finance/DMEXFinance.sol#152)
+	- liquidAmount > prodMaxRecv (finance/DMEXFinance.sol#157)
+DMEXFinance._getReleaseAmount() (finance/DMEXFinance.sol#166-182) uses timestamp for comparisons
+	Dangerous comparisons:
+	- nextid > 0 (finance/DMEXFinance.sol#172)
+	- diffDay > _pfinances[nextid].lockDay (finance/DMEXFinance.sol#175)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp[0m
+INFO:Detectors:[92m
+Address.isContract(address) (finance/Address.sol#26-35) uses assembly
+	- INLINE ASM (finance/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (finance/Address.sol#171-188) uses assembly
+	- INLINE ASM (finance/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+DMEXFinance.initialize() (finance/DMEXFinance.sol#29-34) compares to a boolean constant:
+	-require(bool,string)(_initialize == false,already initialized) (finance/DMEXFinance.sol#30)
+DMEXFinance.activeABS(uint256,uint256,uint256,address) (finance/DMEXFinance.sol#48-63) compares to a boolean constant:
+	-require(bool,string)(_pfinances[_prodid].active == false,product already active!) (finance/DMEXFinance.sol#49)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['^0.6.0', '^0.6.2']
+	- ^0.6.2 (finance/Address.sol#3)
+	- ^0.6.0 (finance/DMEXFinance.sol#2)
+	- ABIEncoderV2 (finance/DMEXFinance.sol#3)
+	- ^0.6.0 (finance/DMEXFinanceStorage.sol#2)
+	- ^0.6.0 (finance/Governance.sol#2)
+	- ^0.6.0 (finance/SafeMath.sol#3)
+	- ^0.6.0 (finance/TransferHelper.sol#3)
+	- ^0.6.0 (finance/Vistor.sol#2)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (finance/Address.sol#3) allows old versions
+Pragma version^0.6.0 (finance/DMEXFinance.sol#2) allows old versions
+Pragma version^0.6.0 (finance/DMEXFinanceStorage.sol#2) allows old versions
+Pragma version^0.6.0 (finance/Governance.sol#2) allows old versions
+Pragma version^0.6.0 (finance/SafeMath.sol#3) allows old versions
+Pragma version^0.6.0 (finance/TransferHelper.sol#3) allows old versions
+Pragma version^0.6.0 (finance/Vistor.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (finance/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (finance/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (finance/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (finance/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (finance/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (finance/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (finance/Address.sol#167)
+Low level call in TransferHelper.safeApprove(address,address,uint256) (finance/TransferHelper.sol#7-11):
+	- (success,data) = token.call(abi.encodeWithSelector(0x095ea7b3,to,value)) (finance/TransferHelper.sol#9)
+Low level call in TransferHelper.safeTransfer(address,address,uint256) (finance/TransferHelper.sol#13-17):
+	- (success,data) = token.call(abi.encodeWithSelector(0xa9059cbb,to,value)) (finance/TransferHelper.sol#15)
+Low level call in TransferHelper.safeTransferFrom(address,address,address,uint256) (finance/TransferHelper.sol#19-23):
+	- (success,data) = token.call(abi.encodeWithSelector(0x23b872dd,from,to,value)) (finance/TransferHelper.sol#21)
+Low level call in TransferHelper.safeTransferETH(address,uint256) (finance/TransferHelper.sol#25-28):
+	- (success) = to.call{value: value}(new bytes(0)) (finance/TransferHelper.sol#26)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Parameter DMEXFinance.getProdFinanceInfo(uint256)._prodid (finance/DMEXFinance.sol#44) is not in mixedCase
+Parameter DMEXFinance.activeABS(uint256,uint256,uint256,address)._prodid (finance/DMEXFinance.sol#48) is not in mixedCase
+Parameter DMEXFinance.activeABS(uint256,uint256,uint256,address)._amount (finance/DMEXFinance.sol#48) is not in mixedCase
+Parameter DMEXFinance.activeABS(uint256,uint256,uint256,address)._lockDay (finance/DMEXFinance.sol#48) is not in mixedCase
+Parameter DMEXFinance.activeABS(uint256,uint256,uint256,address)._admin (finance/DMEXFinance.sol#48) is not in mixedCase
+Parameter DMEXFinance.userDeposit(uint256)._amount (finance/DMEXFinance.sol#65) is not in mixedCase
+Parameter DMEXFinance.vendorWithdraw(uint256)._prodid (finance/DMEXFinance.sol#86) is not in mixedCase
+Parameter DMEXFinance.getProdReleaseInfo(uint256)._prodid (finance/DMEXFinance.sol#106) is not in mixedCase
+Constant DMEXFinance.usdt (finance/DMEXFinance.sol#23) is not in UPPER_CASE_WITH_UNDERSCORES
+Variable DMEXFinance._initialize (finance/DMEXFinance.sol#27) is not in mixedCase
+Variable DMEXFinanceStorage._pfinances (finance/DMEXFinanceStorage.sol#52) is not in mixedCase
+Variable DMEXFinanceStorage._token (finance/DMEXFinanceStorage.sol#53) is not in mixedCase
+Variable DMEXFinanceStorage._global (finance/DMEXFinanceStorage.sol#54) is not in mixedCase
+Variable Governance._governance (finance/Governance.sol#6) is not in mixedCase
+Parameter Vistor.setVistor(address,bool)._addr (finance/Vistor.sol#17) is not in mixedCase
+Parameter Vistor.allow(address)._addr (finance/Vistor.sol#22) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+DMEXFinance.ERC20_APPROVE_SELECTOR (finance/DMEXFinance.sol#21) is never used in DMEXFinance (finance/DMEXFinance.sol#11-196)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variables[0m
+INFO:Detectors:[92m
+initialize() should be declared external:
+	- DMEXFinance.initialize() (finance/DMEXFinance.sol#29-34)
+getDTokenTotalSupply() should be declared external:
+	- DMEXFinance.getDTokenTotalSupply() (finance/DMEXFinance.sol#36-38)
+getGlobalInfo() should be declared external:
+	- DMEXFinance.getGlobalInfo() (finance/DMEXFinance.sol#40-42)
+getProdFinanceInfo(uint256) should be declared external:
+	- DMEXFinance.getProdFinanceInfo(uint256) (finance/DMEXFinance.sol#44-46)
+activeABS(uint256,uint256,uint256,address) should be declared external:
+	- DMEXFinance.activeABS(uint256,uint256,uint256,address) (finance/DMEXFinance.sol#48-63)
+userDeposit(uint256) should be declared external:
+	- DMEXFinance.userDeposit(uint256) (finance/DMEXFinance.sol#65-73)
+userRedeem() should be declared external:
+	- DMEXFinance.userRedeem() (finance/DMEXFinance.sol#75-84)
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (finance/Governance.sol#19-24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (finance/DMEXFinanceStorage.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Variable DMEXFinanceStorage._pfinances (finance/DMEXFinanceStorage.sol#52) is not in mixedCase
+Variable DMEXFinanceStorage._token (finance/DMEXFinanceStorage.sol#53) is not in mixedCase
+Variable DMEXFinanceStorage._global (finance/DMEXFinanceStorage.sol#54) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+ERC20.constructor(string,string).name (finance/ERC20.sol#57) shadows:
+	- ERC20.name() (finance/ERC20.sol#66-68) (function)
+ERC20.constructor(string,string).symbol (finance/ERC20.sol#57) shadows:
+	- ERC20.symbol() (finance/ERC20.sol#74-76) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing[0m
+INFO:Detectors:[92m
+Address.isContract(address) (finance/Address.sol#26-35) uses assembly
+	- INLINE ASM (finance/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (finance/Address.sol#171-188) uses assembly
+	- INLINE ASM (finance/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['^0.6.0', '^0.6.2']
+	- ^0.6.2 (finance/Address.sol#3)
+	- ^0.6.0 (finance/Context.sol#3)
+	- ^0.6.0 (finance/ERC20.sol#3)
+	- ^0.6.0 (finance/IERC20.sol#3)
+	- ^0.6.0 (finance/SafeMath.sol#3)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (finance/Address.sol#3) allows old versions
+Pragma version^0.6.0 (finance/Context.sol#3) allows old versions
+Pragma version^0.6.0 (finance/ERC20.sol#3) allows old versions
+Pragma version^0.6.0 (finance/IERC20.sol#3) allows old versions
+Pragma version^0.6.0 (finance/SafeMath.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (finance/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (finance/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (finance/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (finance/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (finance/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (finance/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (finance/Address.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+name() should be declared external:
+	- ERC20.name() (finance/ERC20.sol#66-68)
+symbol() should be declared external:
+	- ERC20.symbol() (finance/ERC20.sol#74-76)
+decimals() should be declared external:
+	- ERC20.decimals() (finance/ERC20.sol#91-93)
+totalSupply() should be declared external:
+	- ERC20.totalSupply() (finance/ERC20.sol#98-100)
+balanceOf(address) should be declared external:
+	- ERC20.balanceOf(address) (finance/ERC20.sol#105-107)
+transfer(address,uint256) should be declared external:
+	- ERC20.transfer(address,uint256) (finance/ERC20.sol#117-120)
+allowance(address,address) should be declared external:
+	- ERC20.allowance(address,address) (finance/ERC20.sol#125-127)
+approve(address,uint256) should be declared external:
+	- ERC20.approve(address,uint256) (finance/ERC20.sol#136-139)
+transferFrom(address,address,uint256) should be declared external:
+	- ERC20.transferFrom(address,address,uint256) (finance/ERC20.sol#153-157)
+increaseAllowance(address,uint256) should be declared external:
+	- ERC20.increaseAllowance(address,uint256) (finance/ERC20.sol#171-174)
+decreaseAllowance(address,uint256) should be declared external:
+	- ERC20.decreaseAllowance(address,uint256) (finance/ERC20.sol#190-193)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[91m
+Reentrancy in TeamTimeLock.teamRecvLock() (finance/TeamTimeLock.sol#44-52):
+	External calls:
+	- _safeTransfer(dmcToken,msg.sender,userRecvs) (finance/TeamTimeLock.sol#48)
+		- returnData = _token.functionCall(abi.encodeWithSelector(ERC20_TRANSFER_SELECTOR,_to,_amount),ERC20: transfer call failed) (finance/TeamTimeLock.sol#82-86)
+		- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+	External calls sending eth:
+	- _safeTransfer(dmcToken,msg.sender,userRecvs) (finance/TeamTimeLock.sol#48)
+		- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+	State variables written after the call(s):
+	- teamRecvs[msg.sender] = totalReleases (finance/TeamTimeLock.sol#49)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities[0m
+INFO:Detectors:[93m
+TeamTimeLock._teamTotalUnlocks(address) (finance/TeamTimeLock.sol#70-79) performs a multiplication on the result of a division:
+	-_period = diffBlock.div(30 * 28800) (finance/TeamTimeLock.sol#73)
+	-amount.mul(_period).div(lockPeriod) (finance/TeamTimeLock.sol#77)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply[0m
+INFO:Detectors:[92m
+Reentrancy in TeamTimeLock.teamRecvLock() (finance/TeamTimeLock.sol#44-52):
+	External calls:
+	- _safeTransfer(dmcToken,msg.sender,userRecvs) (finance/TeamTimeLock.sol#48)
+		- returnData = _token.functionCall(abi.encodeWithSelector(ERC20_TRANSFER_SELECTOR,_to,_amount),ERC20: transfer call failed) (finance/TeamTimeLock.sol#82-86)
+		- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+	External calls sending eth:
+	- _safeTransfer(dmcToken,msg.sender,userRecvs) (finance/TeamTimeLock.sol#48)
+		- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+	Event emitted after the call(s):
+	- TeamLockRecv(msg.sender,userRecvs) (finance/TeamTimeLock.sol#50)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3[0m
+INFO:Detectors:[92m
+Address.isContract(address) (finance/Address.sol#26-35) uses assembly
+	- INLINE ASM (finance/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (finance/Address.sol#171-188) uses assembly
+	- INLINE ASM (finance/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['^0.6.0', '^0.6.2']
+	- ^0.6.2 (finance/Address.sol#3)
+	- ^0.6.0 (finance/Governance.sol#2)
+	- ^0.6.0 (finance/SafeMath.sol#3)
+	- ^0.6.0 (finance/TeamTimeLock.sol#2)
+	- ABIEncoderV2 (finance/TeamTimeLock.sol#3)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (finance/Address.sol#3) allows old versions
+Pragma version^0.6.0 (finance/Governance.sol#2) allows old versions
+Pragma version^0.6.0 (finance/SafeMath.sol#3) allows old versions
+Pragma version^0.6.0 (finance/TeamTimeLock.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (finance/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (finance/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (finance/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (finance/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (finance/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (finance/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (finance/Address.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Variable Governance._governance (finance/Governance.sol#6) is not in mixedCase
+Parameter TeamTimeLock.startTimeLock(address)._dmcToken (finance/TeamTimeLock.sol#28) is not in mixedCase
+Constant TeamTimeLock.lockPeriod (finance/TeamTimeLock.sol#24) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant TeamTimeLock.totalLocks (finance/TeamTimeLock.sol#25) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+TeamTimeLock.slitherConstructorConstantVariables() (finance/TeamTimeLock.sol#9-93) uses literals with too many digits:
+	- totalLocks = 10000000 * 10 ** 18 (finance/TeamTimeLock.sol#25)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits[0m
+INFO:Detectors:[92m
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (finance/Governance.sol#19-24)
+teamRecvLock() should be declared external:
+	- TeamTimeLock.teamRecvLock() (finance/TeamTimeLock.sol#44-52)
+calcTeamRecvLock() should be declared external:
+	- TeamTimeLock.calcTeamRecvLock() (finance/TeamTimeLock.sol#54-56)
+calcUserTeamRecvLock(address) should be declared external:
+	- TeamTimeLock.calcUserTeamRecvLock(address) (finance/TeamTimeLock.sol#58-60)
+userTeamRecvs(address) should be declared external:
+	- TeamTimeLock.userTeamRecvs(address) (finance/TeamTimeLock.sol#62-64)
+userTeamHolder(address) should be declared external:
+	- TeamTimeLock.userTeamHolder(address) (finance/TeamTimeLock.sol#66-68)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['>=0.6.0<0.8.0', '^0.6.0']
+	- ^0.6.0 (finance/Context.sol#3)
+	- >=0.6.0<0.8.0 (finance/Ownable.sol#3)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (finance/Context.sol#3) allows old versions
+Pragma version>=0.6.0<0.8.0 (finance/Ownable.sol#3) is too complex
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+owner() should be declared external:
+	- Ownable.owner() (finance/Ownable.sol#35-37)
+renounceOwnership() should be declared external:
+	- Ownable.renounceOwnership() (finance/Ownable.sol#54-57)
+transferOwnership(address) should be declared external:
+	- Ownable.transferOwnership(address) (finance/Ownable.sol#63-67)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (finance/IDMEXToken.sol#3) allows old versions
+Pragma version^0.6.0 (finance/IERC20.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (finance/SafeMath.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Address.isContract(address) (finance/Address.sol#26-35) uses assembly
+	- INLINE ASM (finance/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (finance/Address.sol#171-188) uses assembly
+	- INLINE ASM (finance/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (finance/Address.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (finance/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (finance/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (finance/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (finance/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (finance/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (finance/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (finance/Address.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (finance/Governance.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Variable Governance._governance (finance/Governance.sol#6) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (finance/Governance.sol#19-24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+DFinanceToken.constructor(string,string,uint8,bool)._name (finance/DFinanceToken.sol#15) shadows:
+	- ERC20._name (finance/ERC20.sol#44) (state variable)
+DFinanceToken.constructor(string,string,uint8,bool)._symbol (finance/DFinanceToken.sol#15) shadows:
+	- ERC20._symbol (finance/ERC20.sol#45) (state variable)
+DFinanceToken.constructor(string,string,uint8,bool)._decimals (finance/DFinanceToken.sol#15) shadows:
+	- ERC20._decimals (finance/ERC20.sol#46) (state variable)
+ERC20.constructor(string,string).name (finance/ERC20.sol#57) shadows:
+	- ERC20.name() (finance/ERC20.sol#66-68) (function)
+ERC20.constructor(string,string).symbol (finance/ERC20.sol#57) shadows:
+	- ERC20.symbol() (finance/ERC20.sol#74-76) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing[0m
+INFO:Detectors:[92m
+Address.isContract(address) (finance/Address.sol#26-35) uses assembly
+	- INLINE ASM (finance/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (finance/Address.sol#171-188) uses assembly
+	- INLINE ASM (finance/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['>=0.6.0<0.8.0', '^0.6.0', '^0.6.2']
+	- ^0.6.2 (finance/Address.sol#3)
+	- ^0.6.0 (finance/Context.sol#3)
+	- ^0.6.0 (finance/DFinanceToken.sol#2)
+	- ^0.6.0 (finance/ERC20.sol#3)
+	- ^0.6.0 (finance/IERC20.sol#3)
+	- >=0.6.0<0.8.0 (finance/Ownable.sol#3)
+	- ^0.6.0 (finance/SafeMath.sol#3)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (finance/Address.sol#3) allows old versions
+Pragma version^0.6.0 (finance/Context.sol#3) allows old versions
+Pragma version^0.6.0 (finance/DFinanceToken.sol#2) allows old versions
+Pragma version^0.6.0 (finance/ERC20.sol#3) allows old versions
+Pragma version^0.6.0 (finance/IERC20.sol#3) allows old versions
+Pragma version>=0.6.0<0.8.0 (finance/Ownable.sol#3) is too complex
+Pragma version^0.6.0 (finance/SafeMath.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (finance/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (finance/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (finance/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (finance/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (finance/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (finance/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (finance/Address.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Parameter DFinanceToken.mint(address,uint256)._to (finance/DFinanceToken.sol#32) is not in mixedCase
+Parameter DFinanceToken.mint(address,uint256)._amount (finance/DFinanceToken.sol#32) is not in mixedCase
+Parameter DFinanceToken.burn(address,uint256)._to (finance/DFinanceToken.sol#36) is not in mixedCase
+Parameter DFinanceToken.burn(address,uint256)._amount (finance/DFinanceToken.sol#36) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+name() should be declared external:
+	- ERC20.name() (finance/ERC20.sol#66-68)
+symbol() should be declared external:
+	- ERC20.symbol() (finance/ERC20.sol#74-76)
+decimals() should be declared external:
+	- ERC20.decimals() (finance/ERC20.sol#91-93)
+totalSupply() should be declared external:
+	- ERC20.totalSupply() (finance/ERC20.sol#98-100)
+balanceOf(address) should be declared external:
+	- ERC20.balanceOf(address) (finance/ERC20.sol#105-107)
+allowance(address,address) should be declared external:
+	- ERC20.allowance(address,address) (finance/ERC20.sol#125-127)
+approve(address,uint256) should be declared external:
+	- ERC20.approve(address,uint256) (finance/ERC20.sol#136-139)
+increaseAllowance(address,uint256) should be declared external:
+	- ERC20.increaseAllowance(address,uint256) (finance/ERC20.sol#171-174)
+decreaseAllowance(address,uint256) should be declared external:
+	- ERC20.decreaseAllowance(address,uint256) (finance/ERC20.sol#190-193)
+owner() should be declared external:
+	- Ownable.owner() (finance/Ownable.sol#35-37)
+renounceOwnership() should be declared external:
+	- Ownable.renounceOwnership() (finance/Ownable.sol#54-57)
+transferOwnership(address) should be declared external:
+	- Ownable.transferOwnership(address) (finance/Ownable.sol#63-67)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (finance/Context.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[93m
+DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256) (finance/DMEXJointMining.sol#86-101) performs a multiplication on the result of a division:
+	-dayTime = block.timestamp.div(DAYTIME).mul(DAYTIME) (finance/DMEXJointMining.sol#87)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply[0m
+INFO:Detectors:[93m
+Reentrancy in DMEXJointMining._userRedeemCommon(IMasterMining,bytes32,uint256) (finance/DMEXJointMining.sol#133-164):
+	External calls:
+	- userIncome(_pid) (finance/DMEXJointMining.sol#148)
+		- (success,data) = token.call(abi.encodeWithSelector(0xa9059cbb,to,value)) (finance/TransferHelper.sol#15)
+		- TransferHelper.safeTransfer(ifil,msg.sender,incomeAmount) (finance/DMEXJointMining.sol#192)
+	- dlp.burn(msg.sender,_amount) (finance/DMEXJointMining.sol#152)
+	- dli.burn(msg.sender,_dliTokens) (finance/DMEXJointMining.sol#153)
+	State variables written after the call(s):
+	- _userPool.userHolders[msg.sender] = _userPool.userHolders[msg.sender].sub(_dliTokens) (finance/DMEXJointMining.sol#155)
+	- _global.userGainPrincipals = _global.userGainPrincipals.add(_amount) (finance/DMEXJointMining.sol#157)
+Reentrancy in DMEXJointMining.userDeposit(bytes32,uint256) (finance/DMEXJointMining.sol#103-131):
+	External calls:
+	- TransferHelper.safeTransferFrom(_vendorPools[_pid].global.ptoken,msg.sender,address(this),_amount) (finance/DMEXJointMining.sol#106)
+	- dlp.mint(msg.sender,_amount) (finance/DMEXJointMining.sol#115)
+	- dli.mint(msg.sender,exchangeAmount) (finance/DMEXJointMining.sol#116)
+	State variables written after the call(s):
+	- _userPool.userRecvs[msg.sender] += _userPool.globalMask.sub(_userPool.userMask[msg.sender]).mul(_userPool.userHolders[msg.sender]).div(GLOBAL_DECIMAL) (finance/DMEXJointMining.sol#118)
+	- _userPool.userHolders[msg.sender] = _userPool.userHolders[msg.sender].add(exchangeAmount) (finance/DMEXJointMining.sol#119)
+	- _userPool.userMask[msg.sender] = _userPool.globalMask (finance/DMEXJointMining.sol#120)
+	- _global.userDeposits = _global.userDeposits.add(_amount) (finance/DMEXJointMining.sol#122)
+	- _global.state = MiningPoolState.GROWING (finance/DMEXJointMining.sol#126)
+Reentrancy in DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256) (finance/DMEXJointMining.sol#86-101):
+	External calls:
+	- TransferHelper.safeTransferFrom(_vendorPools[_pid].global.ptoken,msg.sender,address(this),_principalAmount) (finance/DMEXJointMining.sol#91)
+	- TransferHelper.safeTransferFrom(ifil,msg.sender,address(this),_incomeAmount) (finance/DMEXJointMining.sol#92)
+	- TransferHelper.safeTransferFrom(ifil,msg.sender,fundAddr,_fundAmount) (finance/DMEXJointMining.sol#93)
+	State variables written after the call(s):
+	- _vendorPools[_pid].depositRecords[dayTime] = true (finance/DMEXJointMining.sol#94)
+	- _vendorPools[_pid].global.vendorReleasePrincipals += _principalAmount (finance/DMEXJointMining.sol#95)
+	- _vendorPools[_pid].global.vendorReleaseBenefits += _incomeAmount (finance/DMEXJointMining.sol#96)
+	- _updateBenefitPool(_pid,_incomeAmount,_incomeValut) (finance/DMEXJointMining.sol#98)
+		- _global.dpPrice = _global.dpPrice.mul(dliTotalSupply).add(_amountValut.mul(GLOBAL_DECIMAL)).div(dliTotalSupply) (finance/DMEXJointMining.sol#258)
+Reentrancy in DMEXJointMining.vendorWithdraw(bytes32,uint256) (finance/DMEXJointMining.sol#210-231):
+	External calls:
+	- DFinanceToken(afil).burn(msg.sender,withdrawAmount) (finance/DMEXJointMining.sol#224)
+	- TransferHelper.safeTransfer(_vendorPools[_pid].global.ptoken,msg.sender,withdrawAmount) (finance/DMEXJointMining.sol#226)
+	State variables written after the call(s):
+	- _vendorPools[_pid].global.vendorGains += withdrawAmount (finance/DMEXJointMining.sol#228)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1[0m
+INFO:Detectors:[92m
+DFinanceToken.constructor(string,string,uint8,bool)._name (finance/DFinanceToken.sol#15) shadows:
+	- ERC20._name (finance/ERC20.sol#44) (state variable)
+DFinanceToken.constructor(string,string,uint8,bool)._symbol (finance/DFinanceToken.sol#15) shadows:
+	- ERC20._symbol (finance/ERC20.sol#45) (state variable)
+DFinanceToken.constructor(string,string,uint8,bool)._decimals (finance/DFinanceToken.sol#15) shadows:
+	- ERC20._decimals (finance/ERC20.sol#46) (state variable)
+ERC20.constructor(string,string).name (finance/ERC20.sol#57) shadows:
+	- ERC20.name() (finance/ERC20.sol#66-68) (function)
+ERC20.constructor(string,string).symbol (finance/ERC20.sol#57) shadows:
+	- ERC20.symbol() (finance/ERC20.sol#74-76) (function)
+Vistor.setVistor(address,bool).allow (finance/Vistor.sol#17) shadows:
+	- Vistor.allow(address) (finance/Vistor.sol#22-24) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing[0m
+INFO:Detectors:[92m
+Reentrancy in DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256) (finance/DMEXJointMining.sol#86-101):
+	External calls:
+	- TransferHelper.safeTransferFrom(_vendorPools[_pid].global.ptoken,msg.sender,address(this),_principalAmount) (finance/DMEXJointMining.sol#91)
+	- TransferHelper.safeTransferFrom(ifil,msg.sender,address(this),_incomeAmount) (finance/DMEXJointMining.sol#92)
+	- TransferHelper.safeTransferFrom(ifil,msg.sender,fundAddr,_fundAmount) (finance/DMEXJointMining.sol#93)
+	State variables written after the call(s):
+	- _updateBenefitPool(_pid,_incomeAmount,_incomeValut) (finance/DMEXJointMining.sol#98)
+		- _userPool.globalMask += _amount.mul(GLOBAL_DECIMAL).div(dliTotalSupply) (finance/DMEXJointMining.sol#254)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2[0m
+INFO:Detectors:[92m
+Reentrancy in DMEXJointMining._userRedeemCommon(IMasterMining,bytes32,uint256) (finance/DMEXJointMining.sol#133-164):
+	External calls:
+	- userIncome(_pid) (finance/DMEXJointMining.sol#148)
+		- (success,data) = token.call(abi.encodeWithSelector(0xa9059cbb,to,value)) (finance/TransferHelper.sol#15)
+		- TransferHelper.safeTransfer(ifil,msg.sender,incomeAmount) (finance/DMEXJointMining.sol#192)
+	- dlp.burn(msg.sender,_amount) (finance/DMEXJointMining.sol#152)
+	- dli.burn(msg.sender,_dliTokens) (finance/DMEXJointMining.sol#153)
+	- TransferHelper.safeTransfer(_vendorPools[_pid].global.ptoken,fundAddr,plateformAmount) (finance/DMEXJointMining.sol#161)
+	- TransferHelper.safeTransfer(_vendorPools[_pid].global.ptoken,msg.sender,remainAmount) (finance/DMEXJointMining.sol#162)
+	Event emitted after the call(s):
+	- UserRedeemMPool(msg.sender,_pid,remainAmount,_amount,_dliTokens) (finance/DMEXJointMining.sol#163)
+Reentrancy in DMEXJointMining.expandMiningPool(bytes32,uint256,uint256,uint256,address) (finance/DMEXJointMining.sol#68-84):
+	External calls:
+	- DFinanceToken(_vendorPools[_pid].global.afil).mint(_admin,mintAmount) (finance/DMEXJointMining.sol#82)
+	Event emitted after the call(s):
+	- VendorExpandMPool(msg.sender,_pid,mintAmount) (finance/DMEXJointMining.sol#83)
+Reentrancy in DMEXJointMining.userDeposit(bytes32,uint256) (finance/DMEXJointMining.sol#103-131):
+	External calls:
+	- TransferHelper.safeTransferFrom(_vendorPools[_pid].global.ptoken,msg.sender,address(this),_amount) (finance/DMEXJointMining.sol#106)
+	- dlp.mint(msg.sender,_amount) (finance/DMEXJointMining.sol#115)
+	- dli.mint(msg.sender,exchangeAmount) (finance/DMEXJointMining.sol#116)
+	Event emitted after the call(s):
+	- UserDepositMPool(msg.sender,_pid,_amount,_amount,exchangeAmount) (finance/DMEXJointMining.sol#130)
+Reentrancy in DMEXJointMining.userIncome(bytes32) (finance/DMEXJointMining.sol#174-196):
+	External calls:
+	- TransferHelper.safeTransfer(ifil,msg.sender,incomeAmount) (finance/DMEXJointMining.sol#192)
+	Event emitted after the call(s):
+	- UserIncomeMPool(msg.sender,_pid,incomeAmount) (finance/DMEXJointMining.sol#194)
+Reentrancy in DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256) (finance/DMEXJointMining.sol#86-101):
+	External calls:
+	- TransferHelper.safeTransferFrom(_vendorPools[_pid].global.ptoken,msg.sender,address(this),_principalAmount) (finance/DMEXJointMining.sol#91)
+	- TransferHelper.safeTransferFrom(ifil,msg.sender,address(this),_incomeAmount) (finance/DMEXJointMining.sol#92)
+	- TransferHelper.safeTransferFrom(ifil,msg.sender,fundAddr,_fundAmount) (finance/DMEXJointMining.sol#93)
+	Event emitted after the call(s):
+	- VendorDepositMPool(_pid,_fundAmount,_principalAmount,_incomeAmount,_incomeValut) (finance/DMEXJointMining.sol#100)
+Reentrancy in DMEXJointMining.vendorWithdraw(bytes32,uint256) (finance/DMEXJointMining.sol#210-231):
+	External calls:
+	- DFinanceToken(afil).burn(msg.sender,withdrawAmount) (finance/DMEXJointMining.sol#224)
+	- TransferHelper.safeTransfer(_vendorPools[_pid].global.ptoken,msg.sender,withdrawAmount) (finance/DMEXJointMining.sol#226)
+	Event emitted after the call(s):
+	- VendorWithdrawMPool(msg.sender,_pid,withdrawAmount) (finance/DMEXJointMining.sol#229)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3[0m
+INFO:Detectors:[92m
+DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256) (finance/DMEXJointMining.sol#86-101) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(_vendorPools[_pid].depositRecords[dayTime] == false,today has been deposit benefits) (finance/DMEXJointMining.sol#88)
+DMEXJointMining._createToken(string,string,uint8,bool) (finance/DMEXJointMining.sol#303-317) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(_token != address(0),Create2: Failed on create token) (finance/DMEXJointMining.sol#315)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp[0m
+INFO:Detectors:[92m
+Address.isContract(address) (finance/Address.sol#26-35) uses assembly
+	- INLINE ASM (finance/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (finance/Address.sol#171-188) uses assembly
+	- INLINE ASM (finance/Address.sol#180-183)
+DMEXJointMining._createToken(string,string,uint8,bool) (finance/DMEXJointMining.sol#303-317) uses assembly
+	- INLINE ASM (finance/DMEXJointMining.sol#310-314)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+DMEXJointMining.initialize() (finance/DMEXJointMining.sol#37-43) compares to a boolean constant:
+	-require(bool,string)(_initialize == false,already initialized) (finance/DMEXJointMining.sol#38)
+DMEXJointMining.createMiningPool(uint256,address) (finance/DMEXJointMining.sol#56-66) compares to a boolean constant:
+	-require(bool,string)(_vendorPools[pid].global.active == false,MiningPool Exists!) (finance/DMEXJointMining.sol#58)
+DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256) (finance/DMEXJointMining.sol#86-101) compares to a boolean constant:
+	-require(bool,string)(_vendorPools[_pid].depositRecords[dayTime] == false,today has been deposit benefits) (finance/DMEXJointMining.sol#88)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['>=0.6.0<0.8.0', '^0.6.0', '^0.6.2']
+	- ^0.6.2 (finance/Address.sol#3)
+	- ^0.6.0 (finance/Context.sol#3)
+	- ^0.6.0 (finance/DFinanceToken.sol#2)
+	- ^0.6.0 (finance/DMEXJointMining.sol#2)
+	- ABIEncoderV2 (finance/DMEXJointMining.sol#3)
+	- ^0.6.0 (finance/DMEXJointMiningStorage.sol#2)
+	- ^0.6.0 (finance/ERC20.sol#3)
+	- ^0.6.0 (finance/Governance.sol#2)
+	- ^0.6.0 (finance/IERC20.sol#3)
+	- ^0.6.0 (finance/IMasterMining.sol#3)
+	- >=0.6.0<0.8.0 (finance/Ownable.sol#3)
+	- ^0.6.0 (finance/SafeMath.sol#3)
+	- ^0.6.0 (finance/TransferHelper.sol#3)
+	- ^0.6.0 (finance/Vistor.sol#2)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (finance/Address.sol#3) allows old versions
+Pragma version^0.6.0 (finance/Context.sol#3) allows old versions
+Pragma version^0.6.0 (finance/DFinanceToken.sol#2) allows old versions
+Pragma version^0.6.0 (finance/DMEXJointMining.sol#2) allows old versions
+Pragma version^0.6.0 (finance/DMEXJointMiningStorage.sol#2) allows old versions
+Pragma version^0.6.0 (finance/ERC20.sol#3) allows old versions
+Pragma version^0.6.0 (finance/Governance.sol#2) allows old versions
+Pragma version^0.6.0 (finance/IERC20.sol#3) allows old versions
+Pragma version^0.6.0 (finance/IMasterMining.sol#3) allows old versions
+Pragma version>=0.6.0<0.8.0 (finance/Ownable.sol#3) is too complex
+Pragma version^0.6.0 (finance/SafeMath.sol#3) allows old versions
+Pragma version^0.6.0 (finance/TransferHelper.sol#3) allows old versions
+Pragma version^0.6.0 (finance/Vistor.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (finance/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (finance/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (finance/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (finance/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (finance/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (finance/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (finance/Address.sol#167)
+Low level call in TransferHelper.safeApprove(address,address,uint256) (finance/TransferHelper.sol#7-11):
+	- (success,data) = token.call(abi.encodeWithSelector(0x095ea7b3,to,value)) (finance/TransferHelper.sol#9)
+Low level call in TransferHelper.safeTransfer(address,address,uint256) (finance/TransferHelper.sol#13-17):
+	- (success,data) = token.call(abi.encodeWithSelector(0xa9059cbb,to,value)) (finance/TransferHelper.sol#15)
+Low level call in TransferHelper.safeTransferFrom(address,address,address,uint256) (finance/TransferHelper.sol#19-23):
+	- (success,data) = token.call(abi.encodeWithSelector(0x23b872dd,from,to,value)) (finance/TransferHelper.sol#21)
+Low level call in TransferHelper.safeTransferETH(address,uint256) (finance/TransferHelper.sol#25-28):
+	- (success) = to.call{value: value}(new bytes(0)) (finance/TransferHelper.sol#26)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Parameter DFinanceToken.mint(address,uint256)._to (finance/DFinanceToken.sol#32) is not in mixedCase
+Parameter DFinanceToken.mint(address,uint256)._amount (finance/DFinanceToken.sol#32) is not in mixedCase
+Parameter DFinanceToken.burn(address,uint256)._to (finance/DFinanceToken.sol#36) is not in mixedCase
+Parameter DFinanceToken.burn(address,uint256)._amount (finance/DFinanceToken.sol#36) is not in mixedCase
+Parameter DMEXJointMining.getGlobalInfo(bytes32)._pid (finance/DMEXJointMining.sol#45) is not in mixedCase
+Parameter DMEXJointMining.updateWithdrawFees(uint256,uint256)._feeRate (finance/DMEXJointMining.sol#49) is not in mixedCase
+Parameter DMEXJointMining.updateWithdrawFees(uint256,uint256)._plateformRate (finance/DMEXJointMining.sol#49) is not in mixedCase
+Parameter DMEXJointMining.createMiningPool(uint256,address)._vendorid (finance/DMEXJointMining.sol#56) is not in mixedCase
+Parameter DMEXJointMining.createMiningPool(uint256,address)._payToken (finance/DMEXJointMining.sol#56) is not in mixedCase
+Parameter DMEXJointMining.expandMiningPool(bytes32,uint256,uint256,uint256,address)._pid (finance/DMEXJointMining.sol#68) is not in mixedCase
+Parameter DMEXJointMining.expandMiningPool(bytes32,uint256,uint256,uint256,address)._power (finance/DMEXJointMining.sol#68) is not in mixedCase
+Parameter DMEXJointMining.expandMiningPool(bytes32,uint256,uint256,uint256,address)._price (finance/DMEXJointMining.sol#68) is not in mixedCase
+Parameter DMEXJointMining.expandMiningPool(bytes32,uint256,uint256,uint256,address)._effectPeriod (finance/DMEXJointMining.sol#68) is not in mixedCase
+Parameter DMEXJointMining.expandMiningPool(bytes32,uint256,uint256,uint256,address)._admin (finance/DMEXJointMining.sol#68) is not in mixedCase
+Parameter DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256)._pid (finance/DMEXJointMining.sol#86) is not in mixedCase
+Parameter DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256)._fundAmount (finance/DMEXJointMining.sol#86) is not in mixedCase
+Parameter DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256)._principalAmount (finance/DMEXJointMining.sol#86) is not in mixedCase
+Parameter DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256)._incomeAmount (finance/DMEXJointMining.sol#86) is not in mixedCase
+Parameter DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256)._incomeValut (finance/DMEXJointMining.sol#86) is not in mixedCase
+Parameter DMEXJointMining.userDeposit(bytes32,uint256)._pid (finance/DMEXJointMining.sol#103) is not in mixedCase
+Parameter DMEXJointMining.userDeposit(bytes32,uint256)._amount (finance/DMEXJointMining.sol#103) is not in mixedCase
+Parameter DMEXJointMining.userRedeem(bytes32,uint256)._pid (finance/DMEXJointMining.sol#166) is not in mixedCase
+Parameter DMEXJointMining.userRedeem(bytes32,uint256)._amount (finance/DMEXJointMining.sol#166) is not in mixedCase
+Parameter DMEXJointMining.userRedeemV2(IMasterMining,bytes32,uint256)._pid (finance/DMEXJointMining.sol#170) is not in mixedCase
+Parameter DMEXJointMining.userRedeemV2(IMasterMining,bytes32,uint256)._amount (finance/DMEXJointMining.sol#170) is not in mixedCase
+Parameter DMEXJointMining.userIncome(bytes32)._pid (finance/DMEXJointMining.sol#174) is not in mixedCase
+Parameter DMEXJointMining.getUserIncome(bytes32)._pid (finance/DMEXJointMining.sol#198) is not in mixedCase
+Parameter DMEXJointMining.vendorWithdrawAll(bytes32)._pid (finance/DMEXJointMining.sol#203) is not in mixedCase
+Parameter DMEXJointMining.vendorWithdraw(bytes32,uint256)._pid (finance/DMEXJointMining.sol#210) is not in mixedCase
+Parameter DMEXJointMining.vendorWithdraw(bytes32,uint256)._amount (finance/DMEXJointMining.sol#210) is not in mixedCase
+Parameter DMEXJointMining.getMiningPoolInfo(bytes32)._pid (finance/DMEXJointMining.sol#233) is not in mixedCase
+Parameter DMEXJointMining.vendorCanRecvs(bytes32)._pid (finance/DMEXJointMining.sol#246) is not in mixedCase
+Constant DMEXJointMining.fundAddr (finance/DMEXJointMining.sol#28) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant DMEXJointMining.ifil (finance/DMEXJointMining.sol#29) is not in UPPER_CASE_WITH_UNDERSCORES
+Variable DMEXJointMining.WITHDRAW_FEE_RATE (finance/DMEXJointMining.sol#33) is not in mixedCase
+Variable DMEXJointMining.PLATEFORM_FEE_RATE (finance/DMEXJointMining.sol#34) is not in mixedCase
+Variable DMEXJointMining._initialize (finance/DMEXJointMining.sol#35) is not in mixedCase
+Variable DMEXJointMiningStorage._userPools (finance/DMEXJointMiningStorage.sol#59) is not in mixedCase
+Variable DMEXJointMiningStorage._vendorPools (finance/DMEXJointMiningStorage.sol#60) is not in mixedCase
+Variable Governance._governance (finance/Governance.sol#6) is not in mixedCase
+Parameter Vistor.setVistor(address,bool)._addr (finance/Vistor.sol#17) is not in mixedCase
+Parameter Vistor.allow(address)._addr (finance/Vistor.sol#22) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+DMEXJointMining._createToken(string,string,uint8,bool) (finance/DMEXJointMining.sol#303-317) uses literals with too many digits:
+	- deploymentData = abi.encodePacked(type()(DFinanceToken).creationCode,abi.encode(_symbol,_name,_decimals,_isTransfer)) (finance/DMEXJointMining.sol#304-307)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits[0m
+INFO:Detectors:[92m
+initialize() should be declared external:
+	- DMEXJointMining.initialize() (finance/DMEXJointMining.sol#37-43)
+getGlobalInfo(bytes32) should be declared external:
+	- DMEXJointMining.getGlobalInfo(bytes32) (finance/DMEXJointMining.sol#45-47)
+updateWithdrawFees(uint256,uint256) should be declared external:
+	- DMEXJointMining.updateWithdrawFees(uint256,uint256) (finance/DMEXJointMining.sol#49-54)
+createMiningPool(uint256,address) should be declared external:
+	- DMEXJointMining.createMiningPool(uint256,address) (finance/DMEXJointMining.sol#56-66)
+expandMiningPool(bytes32,uint256,uint256,uint256,address) should be declared external:
+	- DMEXJointMining.expandMiningPool(bytes32,uint256,uint256,uint256,address) (finance/DMEXJointMining.sol#68-84)
+vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256) should be declared external:
+	- DMEXJointMining.vendorDepositBenefits(bytes32,uint256,uint256,uint256,uint256) (finance/DMEXJointMining.sol#86-101)
+userDeposit(bytes32,uint256) should be declared external:
+	- DMEXJointMining.userDeposit(bytes32,uint256) (finance/DMEXJointMining.sol#103-131)
+userRedeem(bytes32,uint256) should be declared external:
+	- DMEXJointMining.userRedeem(bytes32,uint256) (finance/DMEXJointMining.sol#166-168)
+userRedeemV2(IMasterMining,bytes32,uint256) should be declared external:
+	- DMEXJointMining.userRedeemV2(IMasterMining,bytes32,uint256) (finance/DMEXJointMining.sol#170-172)
+vendorWithdrawAll(bytes32) should be declared external:
+	- DMEXJointMining.vendorWithdrawAll(bytes32) (finance/DMEXJointMining.sol#203-208)
+vendorCanRecvs(bytes32) should be declared external:
+	- DMEXJointMining.vendorCanRecvs(bytes32) (finance/DMEXJointMining.sol#246-248)
+name() should be declared external:
+	- ERC20.name() (finance/ERC20.sol#66-68)
+symbol() should be declared external:
+	- ERC20.symbol() (finance/ERC20.sol#74-76)
+decimals() should be declared external:
+	- ERC20.decimals() (finance/ERC20.sol#91-93)
+totalSupply() should be declared external:
+	- ERC20.totalSupply() (finance/ERC20.sol#98-100)
+balanceOf(address) should be declared external:
+	- ERC20.balanceOf(address) (finance/ERC20.sol#105-107)
+allowance(address,address) should be declared external:
+	- ERC20.allowance(address,address) (finance/ERC20.sol#125-127)
+approve(address,uint256) should be declared external:
+	- ERC20.approve(address,uint256) (finance/ERC20.sol#136-139)
+increaseAllowance(address,uint256) should be declared external:
+	- ERC20.increaseAllowance(address,uint256) (finance/ERC20.sol#171-174)
+decreaseAllowance(address,uint256) should be declared external:
+	- ERC20.decreaseAllowance(address,uint256) (finance/ERC20.sol#190-193)
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (finance/Governance.sol#19-24)
+owner() should be declared external:
+	- Ownable.owner() (finance/Ownable.sol#35-37)
+renounceOwnership() should be declared external:
+	- Ownable.renounceOwnership() (finance/Ownable.sol#54-57)
+transferOwnership(address) should be declared external:
+	- Ownable.transferOwnership(address) (finance/Ownable.sol#63-67)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (finance/TransferHelper.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in TransferHelper.safeApprove(address,address,uint256) (finance/TransferHelper.sol#7-11):
+	- (success,data) = token.call(abi.encodeWithSelector(0x095ea7b3,to,value)) (finance/TransferHelper.sol#9)
+Low level call in TransferHelper.safeTransfer(address,address,uint256) (finance/TransferHelper.sol#13-17):
+	- (success,data) = token.call(abi.encodeWithSelector(0xa9059cbb,to,value)) (finance/TransferHelper.sol#15)
+Low level call in TransferHelper.safeTransferFrom(address,address,address,uint256) (finance/TransferHelper.sol#19-23):
+	- (success,data) = token.call(abi.encodeWithSelector(0x23b872dd,from,to,value)) (finance/TransferHelper.sol#21)
+Low level call in TransferHelper.safeTransferETH(address,uint256) (finance/TransferHelper.sol#25-28):
+	- (success) = to.call{value: value}(new bytes(0)) (finance/TransferHelper.sol#26)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (finance/DMEXJointMiningStorage.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Variable DMEXJointMiningStorage._userPools (finance/DMEXJointMiningStorage.sol#59) is not in mixedCase
+Variable DMEXJointMiningStorage._vendorPools (finance/DMEXJointMiningStorage.sol#60) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+Vistor.setVistor(address,bool).allow (finance/Vistor.sol#17) shadows:
+	- Vistor.allow(address) (finance/Vistor.sol#22-24) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing[0m
+INFO:Detectors:[92m
+Pragma version^0.6.0 (finance/Governance.sol#2) allows old versions
+Pragma version^0.6.0 (finance/Vistor.sol#2) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Variable Governance._governance (finance/Governance.sol#6) is not in mixedCase
+Parameter Vistor.setVistor(address,bool)._addr (finance/Vistor.sol#17) is not in mixedCase
+Parameter Vistor.allow(address)._addr (finance/Vistor.sol#22) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (finance/Governance.sol#19-24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Detectors:[91m
+Reentrancy in PETimeLock.peRecvLock() (finance/PETimeLock.sol#44-52):
+	External calls:
+	- _safeTransfer(dmcToken,msg.sender,userRecvs) (finance/PETimeLock.sol#48)
+		- returnData = _token.functionCall(abi.encodeWithSelector(ERC20_TRANSFER_SELECTOR,_to,_amount),ERC20: transfer call failed) (finance/PETimeLock.sol#83-87)
+		- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+	External calls sending eth:
+	- _safeTransfer(dmcToken,msg.sender,userRecvs) (finance/PETimeLock.sol#48)
+		- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+	State variables written after the call(s):
+	- peRecvs[msg.sender] = totalReleases (finance/PETimeLock.sol#49)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities[0m
+INFO:Detectors:[92m
+Reentrancy in PETimeLock.peRecvLock() (finance/PETimeLock.sol#44-52):
+	External calls:
+	- _safeTransfer(dmcToken,msg.sender,userRecvs) (finance/PETimeLock.sol#48)
+		- returnData = _token.functionCall(abi.encodeWithSelector(ERC20_TRANSFER_SELECTOR,_to,_amount),ERC20: transfer call failed) (finance/PETimeLock.sol#83-87)
+		- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+	External calls sending eth:
+	- _safeTransfer(dmcToken,msg.sender,userRecvs) (finance/PETimeLock.sol#48)
+		- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+	Event emitted after the call(s):
+	- PELockRecv(msg.sender,userRecvs) (finance/PETimeLock.sol#50)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3[0m
+INFO:Detectors:[92m
+Address.isContract(address) (finance/Address.sol#26-35) uses assembly
+	- INLINE ASM (finance/Address.sol#33)
+Address._verifyCallResult(bool,bytes,string) (finance/Address.sol#171-188) uses assembly
+	- INLINE ASM (finance/Address.sol#180-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+INFO:Detectors:[92m
+Different versions of Solidity is used in :
+	- Version used: ['^0.6.0', '^0.6.2']
+	- ^0.6.2 (finance/Address.sol#3)
+	- ^0.6.0 (finance/Governance.sol#2)
+	- ^0.6.0 (finance/PETimeLock.sol#2)
+	- ABIEncoderV2 (finance/PETimeLock.sol#3)
+	- ^0.6.0 (finance/SafeMath.sol#3)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+INFO:Detectors:[92m
+Pragma version^0.6.2 (finance/Address.sol#3) allows old versions
+Pragma version^0.6.0 (finance/Governance.sol#2) allows old versions
+Pragma version^0.6.0 (finance/PETimeLock.sol#2) allows old versions
+Pragma version^0.6.0 (finance/SafeMath.sol#3) allows old versions
+solc-0.6.12 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+INFO:Detectors:[92m
+Low level call in Address.sendValue(address,uint256) (finance/Address.sol#53-59):
+	- (success) = recipient.call{value: amount}() (finance/Address.sol#57)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (finance/Address.sol#114-121):
+	- (success,returndata) = target.call{value: value}(data) (finance/Address.sol#119)
+Low level call in Address.functionStaticCall(address,bytes,string) (finance/Address.sol#139-145):
+	- (success,returndata) = target.staticcall(data) (finance/Address.sol#143)
+Low level call in Address.functionDelegateCall(address,bytes,string) (finance/Address.sol#163-169):
+	- (success,returndata) = target.delegatecall(data) (finance/Address.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+INFO:Detectors:[92m
+Variable Governance._governance (finance/Governance.sol#6) is not in mixedCase
+Parameter PETimeLock.startTimeLock(address)._dmcToken (finance/PETimeLock.sol#28) is not in mixedCase
+Constant PETimeLock.lockPeriod (finance/PETimeLock.sol#24) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant PETimeLock.totalLocks (finance/PETimeLock.sol#25) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformity-to-solidity-naming-conventions[0m
+INFO:Detectors:[92m
+PETimeLock.slitherConstructorConstantVariables() (finance/PETimeLock.sol#9-94) uses literals with too many digits:
+	- totalLocks = 20000000 * 10 ** 18 (finance/PETimeLock.sol#25)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits[0m
+INFO:Detectors:[92m
+setGovernance(address) should be declared external:
+	- Governance.setGovernance(address) (finance/Governance.sol#19-24)
+peRecvLock() should be declared external:
+	- PETimeLock.peRecvLock() (finance/PETimeLock.sol#44-52)
+calcPERecvLock() should be declared external:
+	- PETimeLock.calcPERecvLock() (finance/PETimeLock.sol#54-56)
+calcUserPERecvLock(address) should be declared external:
+	- PETimeLock.calcUserPERecvLock(address) (finance/PETimeLock.sol#58-60)
+userPERecvs(address) should be declared external:
+	- PETimeLock.userPERecvs(address) (finance/PETimeLock.sol#62-64)
+userPEHolder(address) should be declared external:
+	- PETimeLock.userPEHolder(address) (finance/PETimeLock.sol#66-68)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+INFO:Slither:finance analyzed (55 contracts with 46 detectors), 347 result(s) found
+INFO:Slither:[94mUse https://crytic.io/ to get access to additional detectors and Github integration[0m
